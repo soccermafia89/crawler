@@ -78,7 +78,32 @@ public class FallenCrawler {
 			numActions = 0;
 		}
 	}
-
+	
+	public WebElement getChildElement(By parents, By sibling, By child) {
+		WebElement parentEl = this.getElement(parents);
+		List<WebElement> childEls = parentEl.findElements(By.tagName("div"));
+		
+		for(WebElement childEl : childEls) {
+			try {
+				WebElement check = childEl.findElement(sibling);
+				return childEl.findElement(child);
+			} catch(NoSuchElementException e) {
+				//Do nothing, not found
+			}
+		}
+		NoSuchElementException e = new NoSuchElementException("No sibling: " + sibling.toString() + " found in: " + parents.toString());
+		throw e;
+	}
+	
+	public List<WebElement> getElements(By by) {
+		return this.getElements(by, 5);
+	}
+	
+	public List<WebElement> getElements(By by, int wait) {
+		driver.manage().timeouts().implicitlyWait(wait, TimeUnit.SECONDS);
+		return driver.findElements(by);
+	}
+	
 	public WebElement getElement(By by) {
 		return this.getElement(by, 5);
 	}
@@ -157,6 +182,8 @@ public class FallenCrawler {
 
 	public Map<String, Integer> getStats() {
 		Map<String, Integer> stats = new HashMap();
+		
+		stats.put("actions", numActions);
 
 		int wounds = 0;
 		int scandal = 0;

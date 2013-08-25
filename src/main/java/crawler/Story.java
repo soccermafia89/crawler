@@ -1,6 +1,7 @@
 package crawler;
 
 import java.util.Map;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 
@@ -29,7 +30,7 @@ public class Story {
 
 	public void nurseFriend() {
 		crawler.resetStart();
-		
+
 		// Travel Home
 		crawler.travel("home");
 
@@ -44,25 +45,30 @@ public class Story {
 		crawler.recordAction();
 	}
 
-	public Map<String, Integer> getStats() {
-		Map<String, Integer> stats = crawler.getStats();
-		stats.put("actions", crawler.getNumActions());
+	// public Map<String, Integer> getStats() {
+	// Map<String, Integer> stats = crawler.getStats();
+	// stats.put("actions", crawler.getNumActions());
+	//
+	// return stats;
+	// }
 
-		return stats;
-	}
-	
 	public void acceptMessages() {
 		try {
-		crawler.getElement(By.id("homeTab")).click();
-		crawler.getElement(By.linkText("/Me/AcceptInvitation")).click();
+			crawler.getElement(By.id("homeTab")).click();
+			crawler.getChildElement(By.id("FeedMessagesWithInvitations"),
+					By.xpath("//img[@alt=\"Be Nursed Back to Health\"]"),
+					By.xpath("//a[@class=\"standard_btn ajaxaction\"]")).click();
+
 		} catch (NoSuchElementException e) {
 			System.out.println("No accept messages found.");
+			// e.printStackTrace();
 		} finally {
-			crawler.recordAction();//Record as action even on failure.
+			crawler.recordAction();// Record as action even on failure.
 		}
 	}
-	
+
 	public void forceAction() {
-		//<form onsubmit="loadMainContentWithParams('/Storylet/ChooseBranch', {'branchid':5941,'secondChances': (this.secondChances &amp;&amp; this.secondChances.checked)? this.secondChances.value:null }); return false;">   
+		// <form
+		// onsubmit="loadMainContentWithParams('/Storylet/ChooseBranch', {'branchid':5941,'secondChances': (this.secondChances &amp;&amp; this.secondChances.checked)? this.secondChances.value:null }); return false;">
 	}
 }
