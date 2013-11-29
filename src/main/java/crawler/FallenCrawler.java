@@ -6,22 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import com.google.common.base.Function;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.JavascriptExecutor;
 
 public class FallenCrawler {
@@ -85,8 +74,8 @@ public class FallenCrawler {
 		
 		for(WebElement childEl : childEls) {
 			try {
-				WebElement check = childEl.findElement(sibling);
-				return childEl.findElement(child);
+				childEl.findElement(sibling);//Check if sibling exists in parent
+				return childEl.findElement(child);//Send child instead of sibling
 			} catch(NoSuchElementException e) {
 				//Do nothing, not found
 			}
@@ -181,7 +170,7 @@ public class FallenCrawler {
 	}
 
 	public Map<String, Integer> getStats() {
-		Map<String, Integer> stats = new HashMap();
+		Map<String, Integer> stats = new HashMap<String, Integer>();
 		
 		stats.put("actions", numActions);
 
@@ -271,6 +260,10 @@ public class FallenCrawler {
 		}
 
 		return parents;
+	}
+	
+	public void reload() {
+		driver.get("http://fallenlondon.storynexus.com/");
 	}
 
 	/*

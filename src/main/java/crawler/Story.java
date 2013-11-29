@@ -1,7 +1,5 @@
 package crawler;
 
-import java.util.Map;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 

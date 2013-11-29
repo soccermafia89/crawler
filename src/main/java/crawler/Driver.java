@@ -17,8 +17,9 @@ public class Driver {
 				stats = crawler.getStats();
 
 				if (stats.get("wounds") > 4) {
-					//this.inviteNurse();
+					this.inviteNurse();
 					story.acceptMessages();
+					crawler.reload();
 				} else {
 					story.robSeance();
 					// story.forceAction();
